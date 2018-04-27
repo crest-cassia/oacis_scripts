@@ -1,0 +1,26 @@
+{
+  "constants": {
+    "x_length": 128,
+    "y_length": 128
+  },
+  "variables": [
+    {
+      "name": "fire_rate",
+      "short": "f"
+    },
+    {
+      "name": "pop_rate",
+      "short": "p"
+    }
+  ],
+  "analyzers": [
+    {
+      "name": "frequency_size_distribution",
+      "files": ["frequency_size_distribution.dat", "frequency_size_distribution.eps"]
+    },
+    {
+      "name": "waiting_time_distribution",
+      "files": ["waiting_time_distribution.dat", "waiting_time_distribution.eps"]
+    }
+  ]
+}
