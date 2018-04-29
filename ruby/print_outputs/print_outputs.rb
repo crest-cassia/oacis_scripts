@@ -13,7 +13,7 @@ output_info_array = outputs_info["outputs"]
 
 header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + " #{key}=#{value}"}
 header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + " #{variable_info["short"]}" else result + " #{variable_info["name"]}" end}
-header2 += output_info_array.reduce {|result, output_info| if output_info.has_key?("short") then result + " avg(#{output_info["short"]}) err(#{output_info["short"]})" else result + " avg(#{output_info["name"]}) err(#{output_info["name"]})" end}
+header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + " avg(#{output_info["short"]}) err(#{output_info["short"]})" else result + " avg(#{output_info["name"]}) err(#{output_info["name"]})" end}
 
 $stdout.puts header1
 $stdout.puts header2
