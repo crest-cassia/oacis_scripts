@@ -70,7 +70,7 @@ else
     simulator.parameter_sets.where(outputs_info["constants"].reduce({}) {|result, (key, value)| result["v.#{key}"] = value; result}).each do |parameter_set|
       variables = variable_info_array.map {|variable| parameter_set.v[variable["name"]]}
       output_json = JSON.load(File.open(parameter_set.analyses.where(analyzer: analyzer, status: :finished).max_by {|analysis| analysis.created_at}.dir.join("_output.json")))
-      outputs = outputs_info_array.map {|output_info| output_json[output_info["name"]]}
+      outputs = output_info_array.map {|output_info| output_json[output_info["name"]]}
 
       $stdout.print variables[0]
       variables[1..-1].each {|variable| $stdout.print " #{variable}"}
