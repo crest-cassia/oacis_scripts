@@ -18,7 +18,7 @@ def print_on_parameter_set_headers(outputs_info, variable_info_array, output_inf
   $stdout.puts header2
 end
 
-def get_variables(variable_info_array)
+def get_variables(variable_info_array, parameter_set)
   variable_info_array.map {|variable| parameter_set.v[variable["name"]]}
 end
 
@@ -30,8 +30,8 @@ def get_errors_of(outputs_array, averages)
   outputs_array.reduce {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
 end
 
-def print_averages_errors(variable_info_array, outputs_array)
-  variables = get_variables(variable_info_array)
+def print_averages_errors(variable_info_array, outputs_array, parameter_set)
+  variables = get_variables(variable_info_array, parameter_set)
 
   averages = get_averages_of(outputs_array)
   errors = get_errors_of(outputs_array, averages)
@@ -42,8 +42,8 @@ def print_averages_errors(variable_info_array, outputs_array)
   $stdout.puts
 end
 
-def print_outputs(variable_info_array, outputs)
-  variables = get_variables(variable_info_array)
+def print_outputs(variable_info_array, outputs, parameter_set)
+  variables = get_variables(variable_info_array, parameter_set)
 
   $stdout.print variables[0]
   variables[1..-1].each {|variable| $stdout.print " #{variable}"}
@@ -71,7 +71,7 @@ if ARGV.length == 2 then
   simulator.parameter_sets.where(constants_hash).each do |parameter_set|
     outputs_array = parameter_set.runs.where(status: :finished).map {|run| output_json = JSON.load(File.open(run.dir.join("_output.json"))); output_info_array.map {|output_info| output_json[output_info["name"]]}}
 
-    print_averages_errors(variable_info_array, outputs_array)
+    print_averages_errors(variable_info_array, outputs_array, parameter_set)
   end
 else
   analyzer = simulator.find_analyzer_by_name(ARGV[2])
@@ -82,7 +82,7 @@ else
     simulator.parameter_sets.where(constants_hash).each do |parameter_set|
       outputs_array = parameter_set.runs.where(status: :finished).map {|run| output_json = JSON.load(File.open(run.analyses.where(analyzer: analyzer, status: :finished).max_by {|analysis| analysis.created_at}.dir.join("_output.json"))); output_info_array.map {|output_info| output_json[output_info["name"]]}}
 
-      print_averages_errors(variable_info_array, outputs_array)
+      print_averages_errors(variable_info_array, outputs_array, parameter_set)
     end
   else# if analyzer[:type] == :on_parameter_set then
     print_on_parameter_set_headers(outputs_info, variable_info_array, output_info_array)
@@ -91,7 +91,7 @@ else
       output_json = JSON.load(File.open(parameter_set.analyses.where(analyzer: analyzer, status: :finished).max_by {|analysis| analysis.created_at}.dir.join("_output.json")))
       outputs = output_info_array.map {|output_info| output_json[output_info["name"]]}
 
-      print_outputs(variable_info_array, outputs)
+      print_outputs(variable_info_array, outputs, parameter_set)
     end
   end
 end
