@@ -10,7 +10,7 @@ def print_on_run_headers(outputs_info, variable_info_array, output_info_array)
 end
 
 def print_on_parameter_set_headers(outputs_info, variable_info_array, output_info_array)
-  header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + " #{key}=#{value}"}
+  header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + "\t#{key}=#{value}"}
   header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + "\t#{variable_info["short"]}" else result + "\t#{variable_info["name"]}" end}
   header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + "\t#{output_info["short"]}" else result + "\t#{output_info["name"]}" end}
 
