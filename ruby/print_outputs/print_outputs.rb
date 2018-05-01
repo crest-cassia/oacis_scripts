@@ -38,8 +38,8 @@ if ARGV.length == 2 then
     variables = variable_info_array.map {|variable| parameter_set.v[variable["name"]]}
     outputs_array = parameter_set.runs.where(status: :finished).map {|run| output_json = JSON.load(File.open(run.dir.join("_output.json"))); output_info_array.map {|output_info| output_json[output_info["name"]]}}
 
-    averages = outputs_array.reduce([]) {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
-    errors = outputs_array.reduce([]) {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
+    averages = outputs_array.reduce {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
+    errors = outputs_array.reduce {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
 
     $stdout.print variables[0]
     variables[1..-1].each {|variable| $stdout.print " #{variable}"}
@@ -56,8 +56,8 @@ else
       variables = variable_info_array.map {|variable| parameter_set.v[variable["name"]]}
       outputs_array = parameter_set.runs.where(status: :finished).map {|run| output_json = JSON.load(File.open(run.analyses.where(analyzer: analyzer, status: :finished).max_by {|analysis| analysis.created_at}.dir.join("_output.json"))); output_info_array.map {|output_info| output_json[output_info["name"]]}}
 
-      averages = outputs_array.reduce([]) {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
-      errors = outputs_array.reduce([]) {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
+      averages = outputs_array.reduce {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
+      errors = outputs_array.reduce {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
 
       $stdout.print variables[0]
       variables[1..-1].each {|variable| $stdout.print " #{variable}"}
