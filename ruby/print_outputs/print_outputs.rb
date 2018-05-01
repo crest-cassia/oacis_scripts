@@ -1,9 +1,9 @@
 require 'json'
 
 def print_on_run_headers(outputs_info, variable_info_array, output_info_array)
-  header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + " #{key}=#{value}"}
-  header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + " #{variable_info["short"]}" else result + " #{variable_info["name"]}" end}
-  header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + " avg(#{output_info["short"]}) err(#{output_info["short"]})" else result + " avg(#{output_info["name"]}) err(#{output_info["name"]})" end}
+  header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + "\t#{key}=#{value}"}
+  header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + "\t#{variable_info["short"]}" else result + "\t#{variable_info["name"]}" end}
+  header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + "\tavg(#{output_info["short"]})\terr(#{output_info["short"]})" else result + "\tavg(#{output_info["name"]})\terr(#{output_info["name"]})" end}
 
   $stdout.puts header1
   $stdout.puts header2
@@ -11,8 +11,8 @@ end
 
 def print_on_parameter_set_headers(outputs_info, variable_info_array, output_info_array)
   header1 = outputs_info["constants"].reduce("##") {|result, (key, value)| result + " #{key}=#{value}"}
-  header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + " #{variable_info["short"]}" else result + " #{variable_info["name"]}" end}
-  header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + " #{output_info["short"]}" else result + " #{output_info["name"]}" end}
+  header2 = variable_info_array.reduce("#") {|result, variable_info| if variable_info.has_key?("short") then result + "\t#{variable_info["short"]}" else result + "\t#{variable_info["name"]}" end}
+  header2 += output_info_array.reduce("") {|result, output_info| if output_info.has_key?("short") then result + "\t#{output_info["short"]}" else result + "\t#{output_info["name"]}" end}
 
   $stdout.puts header1
   $stdout.puts header2
@@ -37,8 +37,8 @@ def print_averages_errors(variable_info_array, outputs_array, parameter_set)
   errors = get_errors_of(outputs_array, averages)
 
   $stdout.print variables[0]
-  variables[1..-1].each {|variable| $stdout.print " #{variable}"}
-  averages.zip(errors).each {|average_error| $stdout.print " #{average_error[0]} #{average_error[1]}"}
+  variables[1..-1].each {|variable| $stdout.print "\t#{variable}"}
+  averages.zip(errors).each {|average_error| $stdout.print "\t#{average_error[0]}\t#{average_error[1]}"}
   $stdout.puts
 end
 
@@ -46,8 +46,8 @@ def print_outputs(variable_info_array, outputs, parameter_set)
   variables = get_variables(variable_info_array, parameter_set)
 
   $stdout.print variables[0]
-  variables[1..-1].each {|variable| $stdout.print " #{variable}"}
-  outputs.each {|output| $stdout.print " #{output}"}
+  variables[1..-1].each {|variable| $stdout.print "\t#{variable}"}
+  outputs.each {|output| $stdout.print "\t#{output}"}
   $stdout.puts
 end
 
