@@ -19,7 +19,7 @@ If you specify it, old analyses created by the analyzer would be removed.
 
 ## Note
 
-This script find old analyses by checking `created_at` fields of analyses.
+This script finds old analyses by checking `created_at` fields of analyses.
 
 ## Author
 
