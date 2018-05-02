@@ -11,11 +11,8 @@ simulator = Simulator.find_by_name(ARGV[0])
 copying_data_info = JSON.load(File.open(ARGV[1]))
 directory = Pathname(ARGV[2])
 
-constants = {}
-copying_data_info["constants"].each do |key, value|
-  constants["v.#{key}"] = value
-end
-variables = copying_data_info["variables"]
+constants_hash = copying_data_info["constants"].reduce({}) {|result, (key, value)| result["v.#{key}"] = value; result}
+variable_info_array = copying_data_info["variables"]
 
 copying_data_info["analyzers"].each do |analyzer_info|
   analyzer_name = analyzer_info["name"]
@@ -24,13 +21,13 @@ copying_data_info["analyzers"].each do |analyzer_info|
 
   analyzer_files = analyzer_info["files"]
 
-  simulator.parameter_sets.where(constants).each do |parameter_set|
+  simulator.parameter_sets.where(constants_hash).each do |parameter_set|
     analyses = parameter_set.analyses.where(analyzer: analyzer, status: :finished)
     next if analyses.length == 0
     analysis = analyses.max_by {|analysis| analysis.created_at}
 
     origins = analyzer_files.map {|filename| analysis.dir.join(filename)}
-    destination = variables.reduce(directory) {|result, variable| result.join("#{variable["short"]}#{parameter_set.v[variable["name"]]}")}
+    destination = variable_info_array.reduce(directory) {|result, variable_info| result.join("#{variable_info["short"]}#{parameter_set.v[variable_info["name"]]}")}
 
     FileUtils.mkdir_p(destination)
     $stdout.puts "copying to #{destination}"
