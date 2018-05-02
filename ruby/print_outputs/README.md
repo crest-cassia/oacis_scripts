@@ -52,7 +52,16 @@ The script searches for parameter sets whose parameters specified by constants a
 1.0  1.0  0.8  0.07  1.4  0.07
 ```
 
-If you don't specify the third parameter `<analyzer name>`, the script searches for `_output.json` in each run, and prints means and standard errors of the means. Meanwhile, if you specify it, the script searches for `_output.json` in each analysis. If the analyzer you specify is `:on_run`, the script prints means and SEMs. However, if the analyzer is `:on_parameter_set`, the script doesn't calculate them and prints the raw values whose names are specified in `outputs` field in a json file you specify in the second argument of the script.
+If you don't specify the third parameter `<analyzer name>`, the script searches for `_output.json` in each run, and prints means and standard errors of the means as described above. Meanwhile, if you specify it, the script searches for `_output.json` in each analysis. If the analyzer you specify is `:on_run`, the script prints means and SEMs. However, if the analyzer is `:on_parameter_set`, the script doesn't calculate them and prints the raw values whose names are specified in `outputs` field in a json file you specify in the second argument of the script. For example;
+
+```
+## x_length=128 y_length=128
+# T  h  m  E
+0.5  0.0  1.0  1.0
+0.5  1.0  1.0  1.1
+1.0  0.0  0.2  3.2
+1.0  1.0  0.8  1.4
+```
 
 ## Author
 
