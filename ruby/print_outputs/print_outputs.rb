@@ -37,11 +37,13 @@ def get_variables(variable_info_array, parameter_set)
 end
 
 def get_averages_of(outputs_array)
-  outputs_array.reduce {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
+  num_outputs = outputs_array[0].length
+  outputs_array.reduce([0.0] * num_outputs) {|result, outputs| result.zip(outputs).map {|result_output| result_output[0] + result_output[1]}}.map {|sum| sum / outputs_array.length}
 end
 
 def get_errors_of(outputs_array, averages)
-  outputs_array.reduce {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
+  num_outputs = averages.length
+  outputs_array.reduce([0.0] * num_outputs) {|result, outputs| result.zip(outputs, averages).map {|result_output_average| result_output_average[0] + (result_output_average[1] - result_output_average[2]) ** 2}}.map {|value| Math.sqrt(value / outputs_array.length / (outputs_array.length-1))}
 end
 
 def print_averages_errors(variable_info_array, outputs_array, parameter_set)
