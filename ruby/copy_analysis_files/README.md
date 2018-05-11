@@ -41,7 +41,7 @@ You have to specify absolute paths of a json file and directory to copy files.
 }
 ```
 
-The script search for parameter sets whose parameters specified by `constants` are fixed.
+The script searches for parameter sets whose parameters specified by `constants` are fixed.
 Each file would copy to the directory `"<directory>/f#{fire_rate}/p#{pop_rate}/` in the case of the above example.
 Copied files are specified in the `analyzers` field.
 
