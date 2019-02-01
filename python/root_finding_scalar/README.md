@@ -1,4 +1,4 @@
-# Title
+# Root finding
 
 A script for automated parameter tuning. It finds a parameter which gives the expected result via iterated trials.
 
