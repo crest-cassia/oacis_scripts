@@ -23,7 +23,7 @@ result_target = 2
 
 def func(p1):
     param = base_param.copy()
-    param["p1"] = p1
+    param[tuned_param] = p1
     ps = sim.find_or_create_parameter_set(param)
     runs = ps.find_or_create_runs_upto( num_runs, submitted_to=host, host_param=host_param )
     oacis.OacisWatcher.await_ps( ps )
