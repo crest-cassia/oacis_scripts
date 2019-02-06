@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+optuna = "==0.7.0"
+msgpack-python = "==0.4.8"
+msgpack-rpc-python = "==0.4.1"
+fibers = "*"
+
+[requires]
+python_version = "3.6"
