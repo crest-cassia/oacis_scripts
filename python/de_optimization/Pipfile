@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-scipy = "1.2.0"
+scipy = "==1.2.0"
 msgpack-python = "==0.4.8"
 msgpack-rpc-python = "==0.4.1"
 fibers = "*"
