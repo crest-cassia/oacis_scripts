@@ -51,18 +51,13 @@ $ <oacis_path>/bin/oacis_python optuna_optimize.py 2> log
 ```
 
 An example of the output is the following.
-It typically takes several minutes to complete one generation. (It depends on the "Max # of Jobs" of the host.) It may take a few hours until the whole process get completed.
-
-```
-```
-
-Therefore, the optimal parameters found by the DE algorithm is `l = 7`, `rho=0.13` and `p=0`.
+It typically takes a few hours to complete. It depends on the "Max # of Jobs" of the host. To make it shorter, change `n_trials` option in the source code.
 
 It iteratively creates ParameterSets and Runs. When the evaluation of a ParameterSet is complete, populations in the next generations are created.
 
 You'll find something like the following if you make a heatmap of flow as a function of rho and p.
 
-![plot](plot_flow_rho_p.png "Amount of traffic flow as a function of rho and p")
+![plot](plot.png "Amount of traffic flow as a function of rho and p")
 
 ## Author
 
