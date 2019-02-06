@@ -30,11 +30,13 @@ def objective(trial):
     oacis.OacisWatcher.await_ps(ps)
     return -ps.average_result(result_key)[0]
 
-sampler = optuna.samplers.TPESampler(seed=1234)   # to fix the seed, we explicitly initialize TPESampler
-study = optuna.create_study(sampler=sampler)
+study = optuna.create_study(study_name='example-study', storage='sqlite:///example.db')
+# to resume a study, use the following
+#   study = optuna.Study(study_name='example-study', storage='sqlite:///example.db')
 w = oacis.OacisWatcher()
 for i in range(6):  # concurrently runs 6 jobs
     w.do_async(lambda: study.optimize(objective, n_trials=20) )
 w.loop()
 
 pprint.pprint(study.best_trial)
+# print(study.trials_dataframe())
