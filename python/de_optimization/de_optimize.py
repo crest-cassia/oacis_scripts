@@ -43,7 +43,7 @@ def map_func(f, xs):
 
 w = oacis.OacisWatcher()
 def main():
-    result = differential_evolution(f, domains, seed=1234, maxiter=30, updating='deferred', workers=map_func, disp=True)
+    result = differential_evolution(f, domains, seed=1234, maxiter=30, tol=0.03, updating='deferred', workers=map_func, disp=True)
     pprint.pprint(result)
 w.do_async(main)
 w.loop()
