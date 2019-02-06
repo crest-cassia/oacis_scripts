@@ -71,22 +71,11 @@ differential_evolution step 16: f(x)= -0.86
 differential_evolution step 17: f(x)= -0.86
 differential_evolution step 18: f(x)= -0.87
 differential_evolution step 19: f(x)= -0.87
-differential_evolution step 20: f(x)= -0.87
-differential_evolution step 21: f(x)= -0.87
-differential_evolution step 22: f(x)= -0.87
-differential_evolution step 23: f(x)= -0.87
-differential_evolution step 24: f(x)= -0.87
-differential_evolution step 25: f(x)= -0.87
-differential_evolution step 26: f(x)= -0.87
-differential_evolution step 27: f(x)= -0.87
-differential_evolution step 28: f(x)= -0.87
-differential_evolution step 29: f(x)= -0.87
-differential_evolution step 30: f(x)= -0.87
 {'fun': -0.8699999999999573,
- 'message': 'Maximum number of iterations has been exceeded.',
- 'nfev': 1399,
- 'nit': 30,
- 'success': False,
+ 'message': 'Optimization terminated successfully.',
+ 'nfev': 904,
+ 'nit': 19,
+ 'success': True,
  'x': array([6.68806649e+00, 1.34852006e-01, 2.76609603e-05])}
 ```
 

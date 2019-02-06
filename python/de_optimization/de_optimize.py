@@ -9,6 +9,11 @@ base_param = {"l": 200, "v":5, "rho": 0.3, "p":0.1, "t_init": 500, "t_measure": 
 
 tuned_params = ["v", "rho", "p"]
 domains = [(3,7), (0.01,0.9), (0,0.5)]
+rounding = [   # functions to map parameters to rounded values
+        lambda x: round(x),
+        lambda x: round(x,2),
+        lambda x: round(x,2)
+        ]
 
 num_runs = 1   # number of runs for each ParameterSet
 
@@ -24,9 +29,9 @@ def f(x):
 
 def x_to_ps(x):
     param = base_param.copy()
-    param["v"] = round(x[0])
-    param["rho"] = round(x[1],2)
-    param["p"] = round(x[2],2)
+    for i,x in enumerate(x):
+        key = tuned_params[i]
+        param[key] = rounding[i](x)
     ps = sim.find_or_create_parameter_set(param)
     runs = ps.find_or_create_runs_upto( num_runs, submitted_to=host, host_param=host_param )
     return ps
@@ -38,7 +43,7 @@ def map_func(f, xs):
 
 w = oacis.OacisWatcher()
 def main():
-    result = differential_evolution(f, domains, seed=1234, maxiter=30, updating='deferred', workers=map_func, disp=True)
+    result = differential_evolution(f, domains, seed=1234, maxiter=30, tol=0.03, updating='deferred', workers=map_func, disp=True)
     pprint.pprint(result)
 w.do_async(main)
 w.loop()
