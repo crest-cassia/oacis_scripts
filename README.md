@@ -27,5 +27,5 @@ If you have any questions or comments, please feel free to send an email to `oac
 ## License
 
 The MIT License (MIT)
-Copyright (c) 2018 RIKEN, R-CCS
+Copyright (c) 2018-2019 RIKEN, R-CCS
 
